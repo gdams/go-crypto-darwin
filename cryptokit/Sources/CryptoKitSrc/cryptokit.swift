@@ -4,13 +4,15 @@
 import CryptoKit
 import Foundation
 
+// Runtime feature detection for SHA3 (available on macOS 26+ only)
 @_cdecl("go_supportsSHA3")
 public func supportsSHA3() -> Bool {
     if #available(macOS 26.0, *) {
+        // SHA3 symbols are lazily bound, so if this returns true,
+        // the runtime can safely call SHA3_* functions.
         return true
-    } else {
-        return false
     }
+    return false
 }
 
 @_cdecl("go_encryptAESGCM")
@@ -297,50 +299,52 @@ public func SHA512(
     hashData.copyBytes(to: outputPointer, count: hashData.count)
 }
 
-// SHA-3 functions (return -1 if macOS version < 26.0)
 @_cdecl("go_SHA3_256")
-@available(macOS 26.0, *)
 public func SHA3_256(
     inputPointer: UnsafePointer<UInt8>,
     inputLength: Int,
     outputPointer: UnsafeMutablePointer<UInt8>
 ) -> Int32 {
+    guard #available(macOS 26.0, *) else {
+        return -1
+    }
     let inputData = Data(bytes: inputPointer, count: inputLength)
     let hash = CryptoKit.SHA3_256.hash(data: inputData)
-
     let hashData = Data(hash)
     hashData.copyBytes(to: outputPointer, count: hashData.count)
-    return 0  // Success
+    return 0
 }
 
-@available(macOS 26.0, *)
 @_cdecl("go_SHA3_384")
 public func SHA3_384(
     inputPointer: UnsafePointer<UInt8>,
     inputLength: Int,
     outputPointer: UnsafeMutablePointer<UInt8>
 ) -> Int32 {
+    guard #available(macOS 26.0, *) else {
+        return -1
+    }
     let inputData = Data(bytes: inputPointer, count: inputLength)
     let hash = CryptoKit.SHA3_384.hash(data: inputData)
-
     let hashData = Data(hash)
     hashData.copyBytes(to: outputPointer, count: hashData.count)
-    return 0  // Success
+    return 0
 }
 
-@available(macOS 26.0, *)
 @_cdecl("go_SHA3_512")
 public func SHA3_512(
     inputPointer: UnsafePointer<UInt8>,
     inputLength: Int,
     outputPointer: UnsafeMutablePointer<UInt8>
 ) -> Int32 {
+    guard #available(macOS 26.0, *) else {
+        return -1
+    }
     let inputData = Data(bytes: inputPointer, count: inputLength)
     let hash = CryptoKit.SHA3_512.hash(data: inputData)
-
     let hashData = Data(hash)
     hashData.copyBytes(to: outputPointer, count: hashData.count)
-    return 0  // Success
+    return 0
 }
 
 @_cdecl("go_hashNew")
