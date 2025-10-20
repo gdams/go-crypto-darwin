@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         go-version: [1.24.x, 1.25.x]
-        macos-version: [macos-13, macos-14, macos-15]
+        macos-version: [macos-13, macos-14, macos-15, macos-26]
         cgo: [1]
         include:
           - go-version: 1.26.x

@@ -16,24 +16,33 @@ import (
 )
 
 const (
-	md5    = 1
-	sha1   = 2
-	sha256 = 3
-	sha384 = 4
-	sha512 = 5
+	md5     = 1
+	sha1    = 2
+	sha256  = 3
+	sha384  = 4
+	sha512  = 5
+	sha3256 = 6
+	sha3384 = 7
+	sha3512 = 8
 )
 
 var (
-	md5BlockSize    = int(cryptokit.HashBlockSize(md5))
-	md5Size         = int(cryptokit.HashSize(md5))
-	sha1BlockSize   = int(cryptokit.HashBlockSize(sha1))
-	sha1Size        = int(cryptokit.HashSize(sha1))
-	sha256BlockSize = int(cryptokit.HashBlockSize(sha256))
-	sha256Size      = int(cryptokit.HashSize(sha256))
-	sha384BlockSize = int(cryptokit.HashBlockSize(sha384))
-	sha384Size      = int(cryptokit.HashSize(sha384))
-	sha512BlockSize = int(cryptokit.HashBlockSize(sha512))
-	sha512Size      = int(cryptokit.HashSize(sha512))
+	md5BlockSize     = int(cryptokit.HashBlockSize(md5))
+	md5Size          = int(cryptokit.HashSize(md5))
+	sha1BlockSize    = int(cryptokit.HashBlockSize(sha1))
+	sha1Size         = int(cryptokit.HashSize(sha1))
+	sha256BlockSize  = int(cryptokit.HashBlockSize(sha256))
+	sha256Size       = int(cryptokit.HashSize(sha256))
+	sha384BlockSize  = int(cryptokit.HashBlockSize(sha384))
+	sha384Size       = int(cryptokit.HashSize(sha384))
+	sha512BlockSize  = int(cryptokit.HashBlockSize(sha512))
+	sha512Size       = int(cryptokit.HashSize(sha512))
+	sha3256BlockSize = int(cryptokit.HashBlockSize(sha3256))
+	sha3256Size      = int(cryptokit.HashSize(sha3256))
+	sha3384BlockSize = int(cryptokit.HashBlockSize(sha3384))
+	sha3384Size      = int(cryptokit.HashSize(sha3384))
+	sha3512BlockSize = int(cryptokit.HashBlockSize(sha3512))
+	sha3512Size      = int(cryptokit.HashSize(sha3512))
 )
 
 type evpHash struct {
@@ -48,6 +57,13 @@ func SupportsHash(h crypto.Hash) bool {
 	switch h {
 	case crypto.MD5, crypto.SHA1, crypto.SHA256, crypto.SHA384, crypto.SHA512:
 		return true
+	case crypto.SHA3_256, crypto.SHA3_384, crypto.SHA3_512:
+		if runtime.GOOS == "darwin" {
+			// SHA-3 is supported on macOS 26.0+ via CryptoKit
+			// Use runtime detection to check actual availability
+			return bool(cryptokit.SupportsSHA3())
+		}
+		return false
 	default:
 		return false
 	}
@@ -184,6 +200,18 @@ type sha512Hash struct {
 	*evpHash
 }
 
+type sha3_256Hash struct {
+	*evpHash
+}
+
+type sha3_384Hash struct {
+	*evpHash
+}
+
+type sha3_512Hash struct {
+	*evpHash
+}
+
 var _ hash.Hash = (*evpHash)(nil)
 var _ HashCloner = (*evpHash)(nil)
 
@@ -209,6 +237,21 @@ func SHA384(p []byte) (sum [48]byte) {
 
 func SHA512(p []byte) (sum [64]byte) {
 	cryptokit.SHA512(addr(p), len(p), addr(sum[:]))
+	return
+}
+
+func SHA3_256(p []byte) (sum [32]byte) {
+	cryptokit.SHA3_256(addr(p), len(p), addr(sum[:]))
+	return
+}
+
+func SHA3_384(p []byte) (sum [48]byte) {
+	cryptokit.SHA3_384(addr(p), len(p), addr(sum[:]))
+	return
+}
+
+func SHA3_512(p []byte) (sum [64]byte) {
+	cryptokit.SHA3_512(addr(p), len(p), addr(sum[:]))
 	return
 }
 
@@ -263,6 +306,39 @@ func NewSHA512() hash.Hash {
 			int32(sha512),
 			sha512BlockSize,
 			sha512Size,
+		),
+	}
+}
+
+// NewSHA3_256 creates a new SHA3-256 hash.
+func NewSHA3_256() hash.Hash {
+	return sha3_256Hash{
+		evpHash: newEVPHash(
+			int32(sha3256),
+			sha3256BlockSize,
+			sha3256Size,
+		),
+	}
+}
+
+// NewSHA3_384 creates a new SHA3-384 hash.
+func NewSHA3_384() hash.Hash {
+	return sha3_384Hash{
+		evpHash: newEVPHash(
+			int32(sha3384),
+			sha3384BlockSize,
+			sha3384Size,
+		),
+	}
+}
+
+// NewSHA3_512 creates a new SHA3-512 hash.
+func NewSHA3_512() hash.Hash {
+	return sha3_512Hash{
+		evpHash: newEVPHash(
+			int32(sha3512),
+			sha3512BlockSize,
+			sha3512Size,
 		),
 	}
 }
