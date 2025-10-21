@@ -303,13 +303,15 @@ struct UnsupportedAlgorithmError: Error {}
 
 // SHA3 functions are only available when compiling with Swift 6.0+ compiler and macOS 26.0+ SDK
 #if compiler(>=6.2)
-@available(macOS 26.0, *)
 @_cdecl("go_SHA3_256")
 public func SHA3_256(
     inputPointer: UnsafePointer<UInt8>,
     inputLength: Int,
     outputPointer: UnsafeMutablePointer<UInt8>
 ) -> Int32 {
+    guard #available(macOS 26.0, *) else {
+        return -1  // Not supported
+    }
     let inputData = Data(bytes: inputPointer, count: inputLength)
     let hash = CryptoKit.SHA3_256.hash(data: inputData)
     let hashData = Data(hash)
@@ -317,13 +319,15 @@ public func SHA3_256(
     return 0
 }
 
-@available(macOS 26.0, *)
 @_cdecl("go_SHA3_384")
 public func SHA3_384(
     inputPointer: UnsafePointer<UInt8>,
     inputLength: Int,
     outputPointer: UnsafeMutablePointer<UInt8>
 ) -> Int32 {
+    guard #available(macOS 26.0, *) else {
+        return -1  // Not supported
+    }
     let inputData = Data(bytes: inputPointer, count: inputLength)
     let hash = CryptoKit.SHA3_384.hash(data: inputData)
     let hashData = Data(hash)
@@ -331,13 +335,15 @@ public func SHA3_384(
     return 0
 }
 
-@available(macOS 26.0, *)
 @_cdecl("go_SHA3_512")
 public func SHA3_512(
     inputPointer: UnsafePointer<UInt8>,
     inputLength: Int,
     outputPointer: UnsafeMutablePointer<UInt8>
 ) -> Int32 {
+    guard #available(macOS 26.0, *) else {
+        return -1  // Not supported
+    }
     let inputData = Data(bytes: inputPointer, count: inputLength)
     let hash = CryptoKit.SHA3_512.hash(data: inputData)
     let hashData = Data(hash)
