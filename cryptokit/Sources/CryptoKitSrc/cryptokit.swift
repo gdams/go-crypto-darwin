@@ -301,7 +301,7 @@ public func SHA512(
 
 // SHA3 functions are only available when compiling with macOS 26.0+ SDK
 @available(macOS 26.0, *)
-func sha3_256(
+func sha3_256_hash(
     inputData: Data
 ) -> SHA3_256Digest {
     return CryptoKit.SHA3_256.hash(data: inputData)
@@ -315,7 +315,7 @@ public func SHA3_256(
 ) -> Int32 {
     if #available(macOS 26.0, *) {
         let inputData = Data(bytes: inputPointer, count: inputLength)
-        let hash = sha3_256(inputData: inputData)
+        let hash = sha3_256_hash(inputData: inputData)
         let hashData = Data(hash)
         hashData.copyBytes(to: outputPointer, count: hashData.count)
         return 0
@@ -325,7 +325,7 @@ public func SHA3_256(
 }
 
 @available(macOS 26.0, *)
-func SHA3_384(
+func sha3_384_hash(
     inputData: Data
 ) -> SHA3_384Digest {
     return CryptoKit.SHA3_384.hash(data: inputData)
@@ -339,7 +339,7 @@ public func SHA3_384(
 ) -> Int32 {
     if #available(macOS 26.0, *) {
         let inputData = Data(bytes: inputPointer, count: inputLength)
-        let hash = SHA3_384(inputData: inputData)
+        let hash = sha3_384_hash(inputData: inputData)
         let hashData = Data(hash)
         hashData.copyBytes(to: outputPointer, count: hashData.count)
         return 0
@@ -349,7 +349,7 @@ public func SHA3_384(
 }
 
 @available(macOS 26.0, *)
-func SHA3_512(
+func sha3_512_hash(
     inputData: Data
 ) -> SHA3_512Digest {
     return CryptoKit.SHA3_512.hash(data: inputData)
@@ -363,7 +363,7 @@ public func SHA3_512(
 ) -> Int32 {
     if #available(macOS 26.0, *) {
         let inputData = Data(bytes: inputPointer, count: inputLength)
-        let hash = SHA3_512(inputData: inputData)
+        let hash = sha3_512_hash(inputData: inputData)
         let hashData = Data(hash)
         hashData.copyBytes(to: outputPointer, count: hashData.count)
         return 0
