@@ -37,7 +37,7 @@ void* go_initHMAC(int32_t, const uint8_t*, int);
 int go_newPrivateKeyEd25519FromSeed(uint8_t*, const uint8_t*);
 int go_newPublicKeyEd25519(uint8_t*, const uint8_t*);
 int go_signEd25519(const uint8_t*, const uint8_t*, size_t, uint8_t*);
-bool go_supportsSHA3(void);
+int go_supportsSHA3(void);
 void go_updateHMAC(int32_t, void*, const uint8_t*, int);
 int go_verifyEd25519(const uint8_t*, const uint8_t*, size_t, const uint8_t*);
 
@@ -153,7 +153,7 @@ int _mkcgo_go_signEd25519(const uint8_t* _arg0, const uint8_t* _arg1, size_t _ar
 	return go_signEd25519(_arg0, _arg1, _arg2, _arg3);
 }
 
-bool _mkcgo_go_supportsSHA3(void) {
+int _mkcgo_go_supportsSHA3(void) {
 	return go_supportsSHA3();
 }
 

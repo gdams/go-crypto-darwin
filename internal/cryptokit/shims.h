@@ -10,7 +10,6 @@
 #ifndef _GO_CRYPTOKIT_SHIMS_H // only include this header once
 #define _GO_CRYPTOKIT_SHIMS_H
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -41,7 +40,7 @@ void go_SHA1(const uint8_t *inputPointer, size_t inputLength, const uint8_t *out
 void go_SHA256(const uint8_t *inputPointer, size_t inputLength, const uint8_t *outputPointer) __attribute__((noescape, nocallback, static));
 void go_SHA384(const uint8_t *inputPointer, size_t inputLength, const uint8_t *outputPointer) __attribute__((noescape, nocallback, static));
 void go_SHA512(const uint8_t *inputPointer, size_t inputLength, const uint8_t *outputPointer) __attribute__((noescape, nocallback, static));
-bool go_supportsSHA3() __attribute__((nocallback, static));
+int go_supportsSHA3() __attribute__((nocallback, static));
 void go_SHA3_256(const uint8_t *inputPointer, size_t inputLength, const uint8_t *outputPointer) __attribute__((noescape, nocallback, static));
 void go_SHA3_384(const uint8_t *inputPointer, size_t inputLength, const uint8_t *outputPointer) __attribute__((noescape, nocallback, static));
 void go_SHA3_512(const uint8_t *inputPointer, size_t inputLength, const uint8_t *outputPointer) __attribute__((noescape, nocallback, static));

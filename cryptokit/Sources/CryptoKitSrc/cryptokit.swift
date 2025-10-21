@@ -6,13 +6,13 @@ import Foundation
 
 // Runtime feature detection for SHA3 (available on macOS 26+ only)
 @_cdecl("go_supportsSHA3")
-public func supportsSHA3() -> Bool {
+public func supportsSHA3() -> Int {
     if #available(macOS 26.0, *) {
         // SHA3 symbols are lazily bound, so if this returns true,
         // the runtime can safely call SHA3_* functions.
-        return true
+        return 1
     }
-    return false
+    return 0
 }
 
 @_cdecl("go_encryptAESGCM")

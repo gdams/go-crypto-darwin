@@ -248,9 +248,9 @@ func SignEd25519(privateKey *uint8, message *uint8, messageLength int, sigBuffer
 	return int32(r0)
 }
 
-func SupportsSHA3() bool {
+func SupportsSHA3() int32 {
 	r0, _, _ := syscallN(uintptr(unsafe.Pointer(&go_supportsSHA3)))
-	return bool(r0)
+	return int32(r0)
 }
 
 func UpdateHMAC(hashFunction int32, ptr unsafe.Pointer, data *uint8, length int32) {

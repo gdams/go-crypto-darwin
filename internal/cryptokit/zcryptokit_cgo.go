@@ -130,8 +130,8 @@ func SignEd25519(privateKey *uint8, message *uint8, messageLength int, sigBuffer
 	return int32(C._mkcgo_go_signEd25519((*C.uint8_t)(unsafe.Pointer(privateKey)), (*C.uint8_t)(unsafe.Pointer(message)), C.size_t(messageLength), (*C.uint8_t)(unsafe.Pointer(sigBuffer))))
 }
 
-func SupportsSHA3() bool {
-	return bool(C._mkcgo_go_supportsSHA3())
+func SupportsSHA3() int32 {
+	return int32(C._mkcgo_go_supportsSHA3())
 }
 
 func UpdateHMAC(hashFunction int32, ptr unsafe.Pointer, data *uint8, length int32) {

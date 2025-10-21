@@ -62,7 +62,7 @@ func SupportsHash(h crypto.Hash) bool {
 	case crypto.MD5, crypto.SHA1, crypto.SHA256, crypto.SHA384, crypto.SHA512:
 		return true
 	case crypto.SHA3_256, crypto.SHA3_384, crypto.SHA3_512:
-		return cryptokit.SupportsSHA3()
+		return cryptokit.SupportsSHA3() == 1
 	default:
 		return false
 	}

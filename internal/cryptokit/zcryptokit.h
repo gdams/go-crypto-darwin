@@ -6,7 +6,6 @@
 #ifndef MKCGO_H // only include this header once
 #define MKCGO_H
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -43,7 +42,7 @@ void* _mkcgo_go_initHMAC(int32_t, const uint8_t*, int);
 int _mkcgo_go_newPrivateKeyEd25519FromSeed(uint8_t*, const uint8_t*);
 int _mkcgo_go_newPublicKeyEd25519(uint8_t*, const uint8_t*);
 int _mkcgo_go_signEd25519(const uint8_t*, const uint8_t*, size_t, uint8_t*);
-bool _mkcgo_go_supportsSHA3(void);
+int _mkcgo_go_supportsSHA3(void);
 void _mkcgo_go_updateHMAC(int32_t, void*, const uint8_t*, int);
 int _mkcgo_go_verifyEd25519(const uint8_t*, const uint8_t*, size_t, const uint8_t*);
 
