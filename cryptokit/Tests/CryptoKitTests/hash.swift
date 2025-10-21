@@ -189,7 +189,7 @@ final class CryptoKitTests: XCTestCase {
 
     // MARK: - SHA-3 Simple API Tests (macOS 26.0+)
 
-    #if canImport(CryptoKit) && (swift(>=6.0) || (swift(>=5.9) && canImport(Keccak)))
+    #if canImport(CryptoKit) && (swift(>=6.2) || (swift(>=5.9) && canImport(Keccak)))
     // Test SHA3-256 hash function (Simple API)
     @available(macOS 26.0, *)
     func testSHA3_256_SimpleAPI() {
@@ -374,7 +374,7 @@ final class CryptoKitTests: XCTestCase {
         // Add SHA-3 functions if available on macOS 26.0+
         var sha3FunctionsList: [HashingFunctions] = []
 
-        #if canImport(CryptoKit) && (swift(>=6.0) || (swift(>=5.9) && canImport(Keccak)))
+        #if canImport(CryptoKit) && (swift(>=6.2) || (swift(>=5.9) && canImport(Keccak)))
         if #available(macOS 26.0, *) {
             sha3FunctionsList = [
                 HashingFunctions(
