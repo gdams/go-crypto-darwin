@@ -25,8 +25,7 @@ for arch in arm64 x86_64; do
         -emit-object \
         -parse-as-library \
         -whole-module-optimization \
-        -target ${arch}-apple-macosx26.0 \
-        -target-min-inlining-version ${arch}-apple-macosx13.0 \
+        -target ${arch}-apple-macosx13.0 \
         Sources/CryptoKitSrc/cryptokit.swift \
         -o "${dest}"
 done
