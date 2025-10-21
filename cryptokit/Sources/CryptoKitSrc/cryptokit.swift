@@ -303,7 +303,7 @@ public func SHA512(
 @available(macOS 26.0, *)
 func sha3_256_hash(
     inputData: Data
-) -> SHA3_256Digest {
+) -> any Digest {
     return CryptoKit.SHA3_256.hash(data: inputData)
 }
 
@@ -327,7 +327,7 @@ public func SHA3_256(
 @available(macOS 26.0, *)
 func sha3_384_hash(
     inputData: Data
-) -> SHA3_384Digest {
+) -> any Digest {
     return CryptoKit.SHA3_384.hash(data: inputData)
 }
 
@@ -351,7 +351,7 @@ public func SHA3_384(
 @available(macOS 26.0, *)
 func sha3_512_hash(
     inputData: Data
-) -> SHA3_512Digest {
+) -> any Digest {
     return CryptoKit.SHA3_512.hash(data: inputData)
 }
 
