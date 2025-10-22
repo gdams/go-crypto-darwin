@@ -17,9 +17,11 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    runs-on: macos-22
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Setup Xcode
+        run: sudo xcode-select --switch /Applications/Xcode_14.1.app
       - name: Build Swift
         run: bash gen-swift-bindings.sh
       - name: Commit changes and create PR
