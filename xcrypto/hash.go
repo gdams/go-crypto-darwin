@@ -62,9 +62,7 @@ func SupportsHash(h crypto.Hash) bool {
 	case crypto.MD5, crypto.SHA1, crypto.SHA256, crypto.SHA384, crypto.SHA512:
 		return true
 	case crypto.SHA3_256, crypto.SHA3_384, crypto.SHA3_512:
-		// TODO hard coded to false for now; enable when we can build syso with macos 26+ SDK
-		return false
-		// return cryptokit.SupportsSHA3() == 1
+		return cryptokit.SupportsSHA3() == 1
 	default:
 		return false
 	}
